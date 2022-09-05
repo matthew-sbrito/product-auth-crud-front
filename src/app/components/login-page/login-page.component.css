@@ -1,0 +1,44 @@
+.login-page {
+  display: grid;
+  place-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #333;
+}
+
+.box-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 60vw;
+  height: 40vh;
+  background-color: #F0F8FFFF;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 80%;
+}
+
+mat-form-field.mat-form-field {
+  width: 100%;
+}
+
+.buttons {
+  width: 100%;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.mat-form-field-flex {
+  align-items: center;
+}
