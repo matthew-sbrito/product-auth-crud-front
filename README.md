@@ -1,6 +1,9 @@
 # Autenticação JWT + CRUD de produtos
 
-Projeto construido com Angular 14, Angular Material, ngx-toastr.
+Projeto construido com:
+- Angular 14;
+    - Angular Material;
+- ngx-toastr;
 
 Para executar o projeto, [clique aqui](https://github.com/matthew-sbrito/product-auth-crud) e utilize este back-end!
 
