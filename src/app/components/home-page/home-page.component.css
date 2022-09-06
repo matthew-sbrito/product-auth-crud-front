@@ -1,0 +1,25 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidenav {
+  width: 250px;
+}
+
+mat-nav-list .logout {
+  position: absolute;
+  bottom: 0;
+}
+
+.nav-list button span {
+  margin-left: 15px;
+}

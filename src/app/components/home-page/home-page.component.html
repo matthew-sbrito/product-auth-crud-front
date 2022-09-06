@@ -1,1 +1,35 @@
-<p>home-page works!</p>
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="over">
+
+    <mat-nav-list class="nav-list">
+      <button mat-list-item routerLink="/user" (click)="drawer.toggle()">
+        <mat-icon>account_circle</mat-icon>
+        <span>{{ fullName }}</span>
+      </button>
+      <button mat-list-item routerLink="/home" (click)="drawer.toggle()">
+        <mat-icon>inventory</mat-icon>
+        <span>Produtos</span>
+      </button>
+      <button mat-list-item (click)="logout()" class="logout">
+        <mat-icon>logout</mat-icon>
+        <span>Sair</span>
+      </button>
+    </mat-nav-list>
+  </mat-drawer>
+
+  <div class="content">
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>{{ drawer.opened ? 'close' : 'menu' }}</mat-icon>
+      </button>
+      <span>Tech Solutio</span>
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+    <!--    <app-product-read></app-product-read>-->
+
+  </div>
+
+</mat-drawer-container>
+
+
