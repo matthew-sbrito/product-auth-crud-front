@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {AuthenticationGuard} from "./security/authentication.guard";
@@ -8,30 +8,48 @@ import {LoginPageComponent} from './components/login-page/login-page.component';
 import {HomePageComponent} from './components/home-page/home-page.component';
 import {routes} from "./app.routing";
 import {RouterModule} from "@angular/router";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButtonModule} from "@angular/material/button";
-import { DialogLoadingComponent } from './shared/components/dialog-loading/dialog-loading.component';
+import { LoadingDialogComponent } from './shared/components/loading-dialog/loading-dialog.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatDialogModule} from "@angular/material/dialog";
 import {ToastrModule} from "ngx-toastr";
 import {MatIconModule} from "@angular/material/icon";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
+import {StaticInjector} from "./shared/common/static-injector";
+import {ConfirmationDialogComponent} from "./shared/components/confirmation-dialog/confirmation-dialog.component";
+import {ConfirmableService} from "./shared/common/confirmable/confirmable.model";
+import {ConfirmationDialogService} from "./shared/services/confirmation-dialog.service";
+import {ProductListComponent} from "./components/product/product-list/product-list.component";
+import {MatTableModule} from "@angular/material/table";
+import {MatExpansionModule} from "@angular/material/expansion";
+import { ProductDialogComponent } from './components/product/product-dialog/product-dialog.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { UserComponent } from './components/user/user.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     HomePageComponent,
-    DialogLoadingComponent
+    LoadingDialogComponent,
+    ConfirmationDialogComponent,
+    ProductListComponent,
+    ProductDialogComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
     ReactiveFormsModule,
-
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -39,9 +57,15 @@ import {MatIconModule} from "@angular/material/icon";
     MatProgressSpinnerModule,
     MatDialogModule,
     MatIconModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-top-right'
-    })
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTableModule,
+    FormsModule,
+    MatTooltipModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
+    ToastrModule.forRoot({ positionClass: 'toast-top-right' })
   ],
   providers: [
     AuthenticationGuard,
@@ -50,8 +74,16 @@ import {MatIconModule} from "@angular/material/icon";
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
       multi: true,
+    },
+    {
+      provide: ConfirmableService,
+      useClass: ConfirmationDialogService
     }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(injector: Injector) {
+    StaticInjector.injector = injector
+  }
+}

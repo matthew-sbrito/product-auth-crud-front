@@ -1,0 +1,67 @@
+<main class="main-content">
+  <div class="header">
+    <h2>Editar perfil</h2>
+  </div>
+  <form [formGroup]="formGroup" class="form">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input
+        matInput
+        name="name"
+        formControlName="name"
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Usuário</mat-label>
+      <input
+        matInput
+        name="username"
+        formControlName="username"
+      >
+    </mat-form-field>
+
+    <div class="passwords" *ngIf="changePassword">
+      <mat-form-field>
+        <mat-label>Senha Atual</mat-label>
+        <input matInput
+               appearance="fill"
+               [type]="passwordType"
+               placeholder="Senha atual..."
+               formControlName="oldPassword"
+        />
+        <mat-icon class="eye-icon" (click)="changeShowPassword()" matSuffix>{{ getIconPassword() }}</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Senha Nova</mat-label>
+        <input matInput
+               appearance="fill"
+               [type]="passwordTypeNew"
+               placeholder="Senha nova..."
+               formControlName="newPassword"
+        />
+        <mat-icon class="eye-icon" (click)="changeShowPasswordNew()" matSuffix>{{ getIconPasswordNew() }}</mat-icon>
+      </mat-form-field>
+    </div>
+
+  </form>
+
+<div class="row">
+
+  <mat-checkbox
+    color="primary"
+    name="changePassword"
+    [(ngModel)]="changePassword"
+    (change)="onChange($event)"
+  >
+    Alterar senha
+  </mat-checkbox>
+
+  <div class="actions">
+    <button mat-raised-button color="warn" routerLink="/home">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="save()">Salvar</button>
+  </div>
+</div>
+
+</main>

@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {LoadingService} from "../../shared/services/loading.service";
 import {ToastrService} from "ngx-toastr";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-login-page',
@@ -25,9 +24,9 @@ export class LoginPageComponent implements OnInit {
     private toast: ToastrService
   ) {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.min(4)]],
-      username: ['', [Validators.required, Validators.min(4)]],
-      password: ['', [Validators.required, Validators.min(4)]],
+      name: [''],
+      username: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
 
@@ -35,7 +34,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   getTitleForm(): string {
-    return this.modeRegister ? 'Registro' : 'Login';
+    return this.modeRegister ? 'Registrar-se' : 'Login';
   }
 
   getLabelButtonChange(): string {
@@ -49,9 +48,11 @@ export class LoginPageComponent implements OnInit {
   changeMode(): void {
     this.modeRegister = !this.modeRegister;
 
-    const validators = this.modeRegister ? [Validators.required, Validators.min(4)] : [];
+    this.form.controls["name"].setErrors(null);
 
-    this.form.controls["name"].setValidators(validators);
+    this.modeRegister
+      ? this.form.controls["name"].setValidators([Validators.required, Validators.minLength(4)])
+      : this.form.controls["name"].clearAsyncValidators();
   }
 
   hasError(name: string, validator: string) {
@@ -69,7 +70,7 @@ export class LoginPageComponent implements OnInit {
 
   submitForm() {
     if(!this.form.valid) {
-     return this.toast.error("Preencha os campos!", "Oppss!")
+      return this.toast.error("Preencha os campos!", "Oppss!")
     }
 
     return this.modeRegister
@@ -82,7 +83,9 @@ export class LoginPageComponent implements OnInit {
 
     this.authenticationService.register(this.form.value).subscribe({
       next: () => {},
-      error: () => {},
+      error: (err) => {
+        this.toast.error(err.error.message, "Oppss!")
+      },
       complete: () => {}
     }).add(() => loadingRef.close());
   }

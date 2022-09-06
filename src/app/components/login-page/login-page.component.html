@@ -35,14 +35,14 @@
                formControlName="password"
         />
         <mat-error *ngIf="hasError('password', 'required')">Senha é obrigatória</mat-error>
-        <mat-icon (click)="changeShowPassword()" matSuffix >{{ getIconPassword() }}</mat-icon>
+        <mat-icon class="eye-icon" (click)="changeShowPassword()" matSuffix >{{ getIconPassword() }}</mat-icon>
       </mat-form-field>
 
     </form>
 
     <div class="buttons">
-      <button mat-button (click)="changeMode()">{{ getLabelButtonChange() }}</button>
-      <button mat-button (click)="submitForm()">{{ getLabelButtonSubmit() }}</button>
+      <button mat-stroked-button color="primary" (click)="changeMode()">{{ getLabelButtonChange() }}</button>
+      <button mat-raised-button color="primary" (click)="submitForm()">{{ getLabelButtonSubmit() }}</button>
     </div>
 
   </section>

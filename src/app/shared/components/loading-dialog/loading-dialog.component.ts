@@ -2,15 +2,15 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-dialog-loading',
-  templateUrl: './dialog-loading.component.html',
-  styleUrls: ['./dialog-loading.component.css']
+  selector: 'app-loading-dialog',
+  templateUrl: './loading-dialog.component.html',
+  styleUrls: ['./loading-dialog.component.css']
 })
-export class DialogLoadingComponent implements OnInit {
+export class LoadingDialogComponent implements OnInit {
 
   constructor(
-    private dialog: MatDialogRef<DialogLoadingComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: DialogLoadingParams,
+    private dialog: MatDialogRef<LoadingDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: LoadingDialogParams,
   ) { }
 
   ngOnInit(): void {
@@ -21,6 +21,6 @@ export class DialogLoadingComponent implements OnInit {
   }
 }
 
-export interface DialogLoadingParams {
+export interface LoadingDialogParams {
   message: string;
 }

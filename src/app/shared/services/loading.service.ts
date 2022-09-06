@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {DialogLoadingComponent, DialogLoadingParams} from "../components/dialog-loading/dialog-loading.component";
+import {LoadingDialogComponent, LoadingDialogParams} from "../components/loading-dialog/loading-dialog.component";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,11 @@ export class LoadingService {
   ) {
   }
 
-  show(message: string = 'Carregando...'): MatDialogRef<DialogLoadingComponent> {
-    return this.dialog.open<DialogLoadingComponent, DialogLoadingParams>(DialogLoadingComponent, {
+  show(message: string = 'Carregando...'): MatDialogRef<LoadingDialogComponent> {
+    return this.dialog.open<LoadingDialogComponent, LoadingDialogParams>(LoadingDialogComponent, {
       data: {message},
-      width: '50vw',
-      height: '25vh',
+      width: '400px',
+      height: '400px',
       disableClose: true
     });
   }

@@ -1,0 +1,10 @@
+<div mat-dialog-title>
+  {{ data.title }}
+</div>
+<div mat-dialog-content style="min-width: 300px;">
+  {{ data.message }}
+</div>
+<div mat-dialog-actions style="float: right">
+  <button mat-button color="warn" (click)="denied()"> {{ data.deniedButtonText }} </button>
+  <button mat-button color="primary" (click)="confirm()"> {{ data.confirmButtonText }} </button>
+</div>
