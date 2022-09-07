@@ -11,8 +11,9 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 500px;
-  height: 40vh;
+  max-width: 500px;
+  width: 70vw;
+  height: 50vh;
   background-color: #F0F8FFFF;
   border-radius: 5px;
   padding: 15px;
@@ -37,6 +38,16 @@ mat-form-field.mat-form-field {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+
+@media (max-width: 600px)  {
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons button {
+    margin: 10px 0;
+  }
 }
 
 .mat-form-field-flex {
