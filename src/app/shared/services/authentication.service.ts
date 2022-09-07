@@ -76,7 +76,7 @@ export class AuthenticationService {
 
     this.loggedUser.next(auth);
 
-    this.router.navigate(['home']).then();
+    this.router.navigate(['']).then();
   }
 
   removeLoggedUser() {

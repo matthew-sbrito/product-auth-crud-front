@@ -12,9 +12,8 @@ export const routes: Routes = [
     component: HomePageComponent,
     canActivate: [AuthenticationGuard],
     children: [
-      {path: 'home', component: ProductListComponent},
+      {path: '', component: ProductListComponent},
       {path: 'user', component: UserComponent}
     ]
   },
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
 ];

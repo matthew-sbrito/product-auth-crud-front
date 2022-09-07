@@ -28,7 +28,7 @@ export class AuthenticationGuard implements CanActivate {
 
   validateCanLoginPage(): boolean {
     if (this.authenticationService.verifyTokenValid()) {
-      this.router.navigate(["home"]).then(() => {
+      this.router.navigate([""]).then(() => {
         this.toast.error("Você já está logado!", "Oppss!")
       });
 
