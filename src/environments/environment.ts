@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  // BASE_URL: 'http://localhost:8080'
-  BASE_URL: 'http://productstest-env.eba-mtr7v5it.us-east-1.elasticbeanstalk.com'
+  BASE_URL: 'http://localhost:8080'
+  // BASE_URL: 'http://productstest-env.eba-mtr7v5it.us-east-1.elasticbeanstalk.com'
 };
 
 /*

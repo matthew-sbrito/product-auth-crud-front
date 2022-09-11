@@ -33,6 +33,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { UserComponent } from './components/user/user.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {LoadingInterceptor} from "./shared/interceptors/loading.interceptor";
+import {CatchErrorInterceptor} from "./shared/interceptors/catch-error.interceptor";
 
 @NgModule({
   declarations: [
@@ -65,11 +67,20 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatTooltipModule,
     MatPaginatorModule,
     MatCheckboxModule,
-    ToastrModule.forRoot({ positionClass: 'toast-top-right' })
+    ToastrModule.forRoot({ positionClass: 'toast-top-right', progressBar: true })
   ],
   providers: [
     AuthenticationGuard,
-    AuthenticationInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CatchErrorInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,

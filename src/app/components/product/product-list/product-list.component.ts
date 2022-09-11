@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from "@angular/router";
 import {TableDataSource} from "../../../shared/common/table.model";
-import {LoadingService} from "../../../shared/services/loading.service";
 import {Product} from "../../../shared/models/product.model";
 import {Confirmable} from "../../../shared/common/confirmable/confimable.decorator";
 import {ProductService} from "../../../shared/services/product.service";
@@ -27,7 +26,6 @@ export class ProductListComponent implements OnInit {
   } as TableDataSource<Product>;
 
   constructor(
-    private loading: LoadingService,
     private toastr: ToastrService,
     private router: Router,
     private productService: ProductService,
@@ -40,15 +38,11 @@ export class ProductListComponent implements OnInit {
   }
 
   handleProducts(): void {
-    const loadingRef = this.loading.show();
-
     this.productService
       .find(this.dataSource.pageable)
       .subscribe({
         next: (response) => this.dataSource = response,
-        error: () =>
-          this.toastr.error('Erro ao carregar lista de produtos!'),
-      }).add(() => loadingRef.close())
+      });
   }
 
   @Confirmable({
@@ -56,18 +50,12 @@ export class ProductListComponent implements OnInit {
     message: "Deseja realmente excluir o produto?"
   })
   destroy(product: Product): void {
-    const loadingRef = this.loading.show();
     this.productService
       .destroy(product)
       .subscribe({
-        next: () => {
-          this.toastr.success('Produto deletado com sucesso!');
-          this.handleProducts();
-        },
-        error: () =>
-          this.toastr.error('Erro ao carregar lista de produtos!'),
-      })
-      .add(() => loadingRef.close());
+        next: () => this.toastr.success('Produto deletado com sucesso!'),
+        complete: () => this.handleProducts(),
+      });
   }
 
   dialogEdit(product: Product): void {
@@ -83,7 +71,8 @@ export class ProductListComponent implements OnInit {
       data
     })
 
-    dialogRef.afterClosed()
+    dialogRef
+      .afterClosed()
       .pipe(filter(e => e != null))
       .subscribe({
         next: (product) => this.save(product!, data.modeEdit)
@@ -91,18 +80,17 @@ export class ProductListComponent implements OnInit {
   }
 
   save(product: Product, modeEdit: boolean): void {
-    const service = modeEdit ? this.productService.update(product) : this.productService.create(product);
+    const service = modeEdit
+      ? this.productService.update(product)
+      : this.productService.create(product);
 
-    service.subscribe({
-      next: (value) => {
-        const message = modeEdit ? "atualizado" : "salvo";
-        this.toastr.success(`Produto ${message} com sucesso!`, "Sucesso!")
-        this.reset();
-      },
-      error: () => {
-        this.toastr.error(`Error ao tentar salvar produto!`, "Oppss!")
-      }
-    })
+    const message = modeEdit ? "atualizado" : "salvo";
+
+    service
+      .subscribe({
+        next: () => this.toastr.success(`Produto ${message} com sucesso!`, "Sucesso!"),
+        complete: () => this.reset(),
+      })
   }
 
   reset() {

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
-import {LoadingService} from "../../shared/services/loading.service";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -20,7 +19,6 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
-    private loadingService: LoadingService,
     private toast: ToastrService
   ) {
     this.form = this.fb.group({
@@ -79,25 +77,21 @@ export class LoginPageComponent implements OnInit {
   }
 
   submitRegister() {
-    const loadingRef = this.loadingService.show();
-
     this.authenticationService.register(this.form.value).subscribe({
       next: () => {},
-      error: (err) => {
-        this.toast.error(err.error.message, "Oppss!")
-      },
-      complete: () => {}
-    }).add(() => loadingRef.close());
+      // error: (err) => {
+      //   this.toast.error(err.error.message, "Oppss!")
+      // },
+    });
   }
 
   submitLogin() {
-    const loadingRef = this.loadingService.show();
-
     const { name, ...rest } = this.form.value;
 
     this.authenticationService.login(rest).subscribe({
-      next: (value) => this.toast.success(`Bem vindo ${value.user.name}!`, "Login realizado!"),
-      error: () => this.toast.error("Credências inválidas!", "Oppss!"),
-    }).add(() => loadingRef.close());
+      next: (value) =>
+        this.toast.success(`Bem vindo ${value.user.name}!`, "Login realizado!"),
+      // error: () => this.toast.error("Credências inválidas!", "Oppss!"),
+    });
   }
 }

@@ -4,9 +4,7 @@ import {Observable} from 'rxjs';
 import {AuthenticationService} from "../shared/services/authentication.service";
 import {ToastrService} from "ngx-toastr";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthenticationGuard implements CanActivate {
 
   constructor(
